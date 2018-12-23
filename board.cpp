@@ -30,8 +30,25 @@ Board::~Board() {
  * Move takes a direction and moves all tiles on the board in that direction.
  * If two colliding tiles are of the same value, combine them.
  */
-int Board::move(int direction) {
+int Board::move(Move direction) {
     //TODO collide tiles in direction
+    int rshift = 0;
+    int cshift = 0;
+    switch(direction) {
+        case Move::UP:
+            rshift = -1;
+            break;
+        case Move::DOWN:
+            rshift = 1;
+            break;
+        case Move::LEFT:
+            cshift = -1;
+            break;
+        case Move::RIGHT:
+            cshift = 1;
+            break;
+    }
+
     for(int r=0; r<4; r++) {
         for(int c=0; c<4; c++) {
             if(tiles[r][c] == NULL) continue;

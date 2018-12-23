@@ -6,11 +6,12 @@
  * New tiles are added to the board with spawn_tile(), and the tiles 
  * can be combined using move().
  */
+enum class Move {UP, DOWN, LEFT, RIGHT};
 class Board {
     public:
         Board(int tile_count);
         ~Board();
-        int move(int direction);
+        int move(Move direction);
         Tile* spawn_tile();
         void draw();
         int get_score();

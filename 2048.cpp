@@ -12,13 +12,12 @@ int main() {
     srand(time(NULL));
     // initialize board with 4 spawned tiles
     Board board(4);
-    board.draw();
     while(true) { // TODO while game is on
         // TODO take input
-        board.move(0);
+        board.draw();
+        board.move(Move::UP);
         board.spawn_tile();
         if(board.is_full()) break;
-        board.draw();
     }
     cout << "Game over! your score:" << board.get_score() << endl;
     return 0;

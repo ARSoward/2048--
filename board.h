@@ -21,6 +21,7 @@ class Board {
         int score;
         bool full;
         Tile** find_space(void);
+        void move_tile(int row, int col, int row_shift, int col_shift);
         void clear();
         void draw_top();
         void draw_row();

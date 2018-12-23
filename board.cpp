@@ -52,8 +52,7 @@ int Board::move(Move direction) {
     for(int r=0; r<4; r++) {
         for(int c=0; c<4; c++) {
             if(tiles[r][c] == NULL) continue;
-            tiles[r][c]->increase();
-            score += tiles[r][c]->get_value();
+            move_tile(r, c, rshift, cshift);
         }
     }
     return 0;
@@ -83,6 +82,52 @@ int Board::get_score() {
 }
 bool Board::is_full() {
     return full;
+}
+
+/* * * * * * * * * * * * * * * * *
+ * Recursively move tile in direction. When we try to move a tile,
+ * a collision occurs with the tile already in that space. Then, 
+ * there are 4 things that can happen. 
+ * base case: collide with the edge
+ *      don't move this tile
+ *      stop
+ * case 0: collide with NULL tile
+ *      swap NULL tile and this tile
+ *      continue moving this tile from new location
+ * case 1: collide with tile of different value
+ *      don't move this tile
+ *      stop
+ * case 2: collide with tile of the same value
+ *      delete this tile
+ *      increase value of collided tile
+ *      continue moving, but with the collided tile
+ */
+void Board::move_tile(int r, int c, int rshift, int cshift) {
+    // BASE CASE: first make sure we can move tile
+    if(tiles[r][c] == NULL 
+    || r + rshift > 4 || r + rshift < 0 
+    || c + cshift > 4 || c + cshift < 0) {
+        return;
+    } 
+    Tile* this_tile = tiles[r][c];
+    Tile* collide_tile = tiles[r+rshift][c+cshift];
+    // CASE 0
+    if(collide_tile == NULL) {
+       //cout << "tile at "<< r << ", " << c << " moving up" << endl;
+        tiles[r+rshift][c+cshift] = this_tile;
+        tiles[r][c] = NULL;
+        return move_tile(r+rshift, c+cshift, rshift, cshift);
+    }
+    //cout << "tile at "<< r << ", " << c << " collides with " << collide_tile->get_value() << endl;
+    // CASE 1
+    if(collide_tile->get_value() != this_tile->get_value()) {
+        return;
+    }
+    // CASE 2
+    score += this_tile->get_value();
+    this_tile = NULL;
+    collide_tile->increase();
+    return move_tile(r+rshift, c+cshift, rshift, cshift);
 }
 
 /* * * * * * * * * * * * * * * * *

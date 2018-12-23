@@ -12,10 +12,13 @@ int main() {
     srand(time(NULL));
     // initialize board with 4 spawned tiles
     Board board(4);
+    Move move;
+    int i = 0;
     while(true) { // TODO while game is on
         // TODO take input
         board.draw();
-        board.move(Move::UP);
+        move = (i++%2==0?Move::LEFT:Move::UP);
+        board.move(move);
         board.spawn_tile();
         if(board.is_full()) break;
     }

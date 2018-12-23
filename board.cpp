@@ -5,7 +5,7 @@
 using namespace std;
 
 Board::Board(int tile_count) {
-    score = 2;
+    score = 0;
     full = 0;
     for(int r=0; r<4; r++) {
         for(int c=0; c<4; c++) {
@@ -13,7 +13,7 @@ Board::Board(int tile_count) {
         }
     }
     for(int i=0; i<tile_count; i++) {
-        Tile* newtile = spawn_tile();
+        spawn_tile();
     }
 }
 
@@ -36,9 +36,9 @@ int Board::move(int direction) {
         for(int c=0; c<4; c++) {
             if(tiles[r][c] == NULL) continue;
             tiles[r][c]->increase();
+            score += tiles[r][c]->get_value();
         }
     }
-    //TODO increase score
     return 0;
 }
 

@@ -4,20 +4,40 @@
 #include "board.h"
 using namespace std;
 
-class Tile;
-class Board;
+#define ARROW_UP    119
+#define ARROW_LEFT  97
+#define ARROW_RIGHT 115
+#define ARROW_DOWN  100
 
+
+Move get_move() {
+    int c = getchar();
+    cout << c;
+    switch(c) {
+        case ARROW_UP:
+            return Move::UP;
+        case ARROW_DOWN:
+            return Move::DOWN;
+        case ARROW_LEFT:
+            return Move::LEFT;
+        case ARROW_RIGHT:
+            return Move::RIGHT;
+        default:
+            return Move::X;
+    }
+}
 
 int main() {
     srand(time(NULL));
     // initialize board with 4 spawned tiles
     Board board(4);
-    Move move;
-    int i = 0;
-    while(true) { // TODO while game is on
-        // TODO take input
+    Move move = Move::X;
+    while(true) {
         board.draw();
-        move = (i++%2==0?Move::LEFT:Move::UP);
+        do{
+            move = get_move();
+        } while (move == Move::X);
+        
         board.move(move);
         board.spawn_tile();
         if(board.is_full()) break;

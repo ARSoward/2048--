@@ -47,6 +47,8 @@ int Board::move(Move direction) {
         case Move::RIGHT:
             cshift = 1;
             break;
+        default:
+            return 1;
     }
 
     for(int r=0; r<4; r++) {

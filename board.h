@@ -9,7 +9,7 @@
 enum class Move {UP, DOWN, LEFT, RIGHT, INVALID};
 class Board {
     public:
-        Board(int tile_count);
+        Board(int tile_count, bool debug);
         ~Board();
         int move(Move direction);
         Tile* spawn_tile();

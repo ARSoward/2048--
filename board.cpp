@@ -4,13 +4,21 @@
 #include "tile.h"
 using namespace std;
 
-Board::Board(int tile_count) {
+Board::Board(int tile_count, bool debug) {
     score = 0;
+    int val = 2;
     for(int r=0; r<4; r++) {
         for(int c=0; c<4; c++) {
-            tiles[r][c] = NULL;
+            if(debug) {
+                tiles[r][c] = new Tile(val);
+                val = val << 1;
+            }
+            else {
+                tiles[r][c] = NULL;
+            }
         }
     }
+    if(debug) return;
     for(int i=0; i<tile_count; i++) {
         spawn_tile();
     }
@@ -84,12 +92,16 @@ Tile* Board::spawn_tile() {
 }
 
 /* * * * * * * * * * * * * * * * *
- * Getters
+ * Getter
  */
 int Board::get_score() {
     return score;
 }
 
+/* * * * * * * * * * * * * * * * *
+ * Iterates the board looking for a free space.
+ * If none is found, return true.
+ */
 bool Board::is_full() {
     for(int r=0; r<4; r++) {
         for(int c=0; c<4; c++) {

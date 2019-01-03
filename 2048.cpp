@@ -29,7 +29,7 @@ Move get_move() {
 int main() {
     srand(time(NULL));
     // initialize board with 4 spawned tiles
-    Board board(4);
+    Board board(4, true);
     Move move = Move::INVALID;
     int moved = 0;
     while(true) {

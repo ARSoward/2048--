@@ -7,8 +7,9 @@
  */
 class Tile {
     private:
-        int color; //hex color
+        char* color; //escape sequence
         int value; //power of two
+        void set_color();
     public:
         Tile(int v);
         void draw();

@@ -22,7 +22,7 @@ Move get_move() {
         case ARROW_RIGHT:
             return Move::RIGHT;
         default:
-            return Move::X;
+            return Move::INVALID;
     }
 }
 
@@ -30,13 +30,13 @@ int main() {
     srand(time(NULL));
     // initialize board with 4 spawned tiles
     Board board(4);
-    Move move = Move::X;
+    Move move = Move::INVALID;
     int moved = 0;
     while(true) {
         board.draw();
         do{
             move = get_move();
-        } while (move == Move::X);
+        } while (move == Move::INVALID);
         
         moved = board.move(move);
         if(board.is_full()) break;

@@ -6,7 +6,7 @@
  * New tiles are added to the board with spawn_tile(), and the tiles 
  * can be combined using move().
  */
-enum class Move {UP, DOWN, LEFT, RIGHT, X};
+enum class Move {UP, DOWN, LEFT, RIGHT, INVALID};
 class Board {
     public:
         Board(int tile_count);

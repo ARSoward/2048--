@@ -6,7 +6,6 @@ using namespace std;
 
 Board::Board(int tile_count) {
     score = 0;
-    full = 0;
     for(int r=0; r<4; r++) {
         for(int c=0; c<4; c++) {
             tiles[r][c] = NULL;
@@ -67,7 +66,6 @@ int Board::move(Move direction) {
             }
         } 
     }
-
     return movements;
 }
 
@@ -77,11 +75,9 @@ int Board::move(Move direction) {
  */
 Tile* Board::spawn_tile() {
     int val = rand()%2+1;
-    Tile** space = find_space();
-    if(space == NULL) {
-        full = true;
+    if (is_full())
         return NULL;
-    }
+    Tile** space = find_space();
     Tile* newtile = new Tile(val*2);
     *space = newtile; 
     return newtile;
@@ -93,8 +89,14 @@ Tile* Board::spawn_tile() {
 int Board::get_score() {
     return score;
 }
+
 bool Board::is_full() {
-    return full;
+    for(int r=0; r<4; r++) {
+        for(int c=0; c<4; c++) {
+            if(tiles[r][c] == NULL) return false;
+        }
+    }
+    return true;
 }
 
 /* * * * * * * * * * * * * * * * *
@@ -151,8 +153,9 @@ Tile** Board::find_space(void) {
     // iterate through until we find an empty tile
     for(int r=start_r; r<start_r+4; r++) {
         for(int c=start_c; c<start_c+4; c++) {
-            if (tiles[r%4][c%4] == NULL) 
+            if (tiles[r%4][c%4] == NULL) {
                 return &tiles[r%4][c%4];
+            }   
         }
     }
     return NULL;

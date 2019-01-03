@@ -19,7 +19,6 @@ class Board {
     private:
         Tile* tiles[4][4];
         int score;
-        bool full;
         Tile** find_space(void);
         int move_tile(int row, int col, int row_shift, int col_shift);
         void clear();

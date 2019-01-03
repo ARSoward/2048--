@@ -6,8 +6,8 @@ using namespace std;
 
 #define ARROW_UP    119
 #define ARROW_LEFT  97
-#define ARROW_RIGHT 115
-#define ARROW_DOWN  100
+#define ARROW_RIGHT 100
+#define ARROW_DOWN  115
 
 
 Move get_move() {

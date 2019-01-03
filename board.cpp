@@ -50,13 +50,23 @@ int Board::move(Move direction) {
         default:
             return 1;
     }
-
-    for(int r=0; r<4; r++) {
-        for(int c=0; c<4; c++) {
-            if(tiles[r][c] == NULL) continue;
-            move_tile(r, c, rshift, cshift);
+    if(direction == Move::UP || direction == Move::LEFT) {
+        for(int r=0; r<4; r++) {
+            for(int c=0; c<4; c++) {
+                if(tiles[r][c] == NULL) continue;
+                move_tile(r, c, rshift, cshift);
+            }
         }
     }
+    else {
+       for(int r=3; r>=0; r--) {
+            for(int c=3; c>=0; c--) {
+                if(tiles[r][c] == NULL) continue;
+                move_tile(r, c, rshift, cshift);
+            }
+        } 
+    }
+
     return 0;
 }
 

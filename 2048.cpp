@@ -39,8 +39,8 @@ int main() {
         } while (move == Move::X);
         
         board.move(move);
-        board.spawn_tile();
         if(board.is_full()) break;
+        board.spawn_tile();
     }
     cout << "Game over! your score:" << board.get_score() << endl;
     return 0;

@@ -27,6 +27,5 @@ class Board {
         void draw_row();
         void draw_boundary();
         void draw_bottom();
-        void draw_tile();
 };
 #endif

@@ -117,20 +117,19 @@ bool Board::is_full() {
 void Board::move_tile(int r, int c, int rshift, int cshift) {
     // BASE CASE: first make sure we can move tile
     if(tiles[r][c] == NULL 
-    || r + rshift > 4 || r + rshift < 0 
-    || c + cshift > 4 || c + cshift < 0) {
+    || r + rshift >= 4 || r + rshift < 0 
+    || c + cshift >= 4 || c + cshift < 0) {
+        cout << "not moving tile at "<< r << ", " << c << endl;
         return;
     } 
     Tile* this_tile = tiles[r][c];
     Tile* collide_tile = tiles[r+rshift][c+cshift];
     // CASE 0
     if(collide_tile == NULL) {
-       //cout << "tile at "<< r << ", " << c << " moving up" << endl;
         tiles[r+rshift][c+cshift] = this_tile;
         tiles[r][c] = NULL;
         return move_tile(r+rshift, c+cshift, rshift, cshift);
     }
-    //cout << "tile at "<< r << ", " << c << " collides with " << collide_tile->get_value() << endl;
     // CASE 1
     if(collide_tile->get_value() != this_tile->get_value()) {
         return;
@@ -194,6 +193,4 @@ void Board::draw_boundary() {
 }
 void Board::draw_bottom() {
     cout << "'-------''-------''-------''-------'"  << endl;
-}
-void Board::draw_tile() {
 }

@@ -50,11 +50,12 @@ int Board::move(Move direction) {
         default:
             return 1;
     }
+    int movements = 0;
     if(direction == Move::UP || direction == Move::LEFT) {
         for(int r=0; r<4; r++) {
             for(int c=0; c<4; c++) {
                 if(tiles[r][c] == NULL) continue;
-                move_tile(r, c, rshift, cshift);
+                movements += move_tile(r, c, rshift, cshift);
             }
         }
     }
@@ -62,12 +63,12 @@ int Board::move(Move direction) {
        for(int r=3; r>=0; r--) {
             for(int c=3; c>=0; c--) {
                 if(tiles[r][c] == NULL) continue;
-                move_tile(r, c, rshift, cshift);
+                movements += move_tile(r, c, rshift, cshift);
             }
         } 
     }
 
-    return 0;
+    return movements;
 }
 
 /* * * * * * * * * * * * * * * * *
@@ -112,14 +113,14 @@ bool Board::is_full() {
  * case 2: collide with tile of the same value
  *      delete this tile
  *      increase value of collided tile
- *      continue moving, but with the collided tile
+ *      stop
  */
-void Board::move_tile(int r, int c, int rshift, int cshift) {
+int Board::move_tile(int r, int c, int rshift, int cshift) {
     // BASE CASE: first make sure we can move tile
     if(tiles[r][c] == NULL 
     || r + rshift >= 4 || r + rshift < 0 
     || c + cshift >= 4 || c + cshift < 0) {
-        return;
+        return 0;
     } 
     Tile* this_tile = tiles[r][c];
     Tile* collide_tile = tiles[r+rshift][c+cshift];
@@ -127,17 +128,17 @@ void Board::move_tile(int r, int c, int rshift, int cshift) {
     if(collide_tile == NULL) {
         tiles[r+rshift][c+cshift] = this_tile;
         tiles[r][c] = NULL;
-        return move_tile(r+rshift, c+cshift, rshift, cshift);
+        return 1 + move_tile(r+rshift, c+cshift, rshift, cshift);
     }
     // CASE 1
     if(collide_tile->get_value() != this_tile->get_value()) {
-        return;
+        return 0;
     }
     // CASE 2
     score += this_tile->get_value();
-    this_tile = NULL;
+    tiles[r][c] = NULL;
     collide_tile->increase();
-    return;
+    return 1;
 }
 
 /* * * * * * * * * * * * * * * * *

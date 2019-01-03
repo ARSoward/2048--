@@ -12,7 +12,6 @@ using namespace std;
 
 Move get_move() {
     int c = getchar();
-    cout << c;
     switch(c) {
         case ARROW_UP:
             return Move::UP;
@@ -32,15 +31,16 @@ int main() {
     // initialize board with 4 spawned tiles
     Board board(4);
     Move move = Move::X;
+    int moved = 0;
     while(true) {
         board.draw();
         do{
             move = get_move();
         } while (move == Move::X);
         
-        board.move(move);
+        moved = board.move(move);
         if(board.is_full()) break;
-        board.spawn_tile();
+        if(moved) board.spawn_tile();
     }
     cout << "Game over! your score:" << board.get_score() << endl;
     return 0;

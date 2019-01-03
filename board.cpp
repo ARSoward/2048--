@@ -119,7 +119,6 @@ void Board::move_tile(int r, int c, int rshift, int cshift) {
     if(tiles[r][c] == NULL 
     || r + rshift >= 4 || r + rshift < 0 
     || c + cshift >= 4 || c + cshift < 0) {
-        cout << "not moving tile at "<< r << ", " << c << endl;
         return;
     } 
     Tile* this_tile = tiles[r][c];
@@ -138,7 +137,7 @@ void Board::move_tile(int r, int c, int rshift, int cshift) {
     score += this_tile->get_value();
     this_tile = NULL;
     collide_tile->increase();
-    return move_tile(r+rshift, c+cshift, rshift, cshift);
+    return;
 }
 
 /* * * * * * * * * * * * * * * * *
